@@ -1,0 +1,42 @@
+services:
+  mongo:
+    image: mongo:7
+    container_name: skilltrack-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  redis:
+    image: redis:7
+    container_name: skilltrack-redis
+    ports:
+      - "6379:6379"
+
+  backend:
+    build: ./backend
+    container_name: skilltrack-backend
+    ports:
+      - "5002:5002"
+    env_file:
+      - ./backend/.env
+    depends_on:
+      - mongo
+      - redis
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+
+  frontend:
+    build: ./frontend/skilltrack-frontend
+    container_name: skilltrack-frontend
+    ports:
+      - "4200:4200"
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend/skilltrack-frontend:/app
+      - /app/node_modules
+
+volumes:
+  mongo_data:
