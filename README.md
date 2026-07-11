@@ -3,7 +3,7 @@
 
 ## SkillTrack README
 
-```md
+
 # SkillTrack
 
 A MEAN stack learning platform with GraphQL APIs.
