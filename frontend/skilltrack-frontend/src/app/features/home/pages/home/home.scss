@@ -1,0 +1,35 @@
+.hero {
+  min-height: 65vh;
+
+  display: flex;
+  align-items: center;
+}
+
+.hero-content {
+  max-width: 700px;
+}
+
+.eyebrow {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+h1 {
+  margin: 0.75rem 0 1rem;
+
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+
+  line-height: 1.05;
+}
+
+.hero-description {
+  max-width: 600px;
+
+  margin-bottom: 2rem;
+
+  font-size: 1.125rem;
+  line-height: 1.7;
+
+  color: #6b7280;
+}

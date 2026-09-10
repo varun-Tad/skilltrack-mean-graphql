@@ -1,0 +1,11 @@
+.courses-page {
+  padding: 2rem 0;
+}
+
+.course-grid {
+  display: grid;
+
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+
+  gap: 1.5rem;
+}

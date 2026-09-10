@@ -1,5 +1,19 @@
-<section>
-  <h1>Explore Courses</h1>
+<section class="courses-page">
+  <app-page-header
+    title="Explore Courses"
+    description="Build practical skills through structured learning paths."
+  />
 
-  <p>Find courses and continue developing your skills.</p>
+  @if (courses().length === 0) {
+    <app-empty-state
+      title="No courses available"
+      message="New courses will appear here when they are published."
+    />
+  } @else {
+    <div class="course-grid">
+      @for (course of courses(); track course.id) {
+        <app-course-card [course]="course" />
+      }
+    </div>
+  }
 </section>

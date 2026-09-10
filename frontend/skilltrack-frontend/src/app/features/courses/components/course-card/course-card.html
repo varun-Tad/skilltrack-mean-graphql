@@ -1,0 +1,27 @@
+<mat-card class="course-card">
+  <mat-card-header>
+    <mat-card-title>
+      {{ course().title }}
+    </mat-card-title>
+
+    <mat-card-subtitle>
+      {{ course().level }}
+    </mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <p>
+      {{ course().description }}
+    </p>
+
+    <div class="course-meta">
+      <span> Instructor: {{ course().instructor }} </span>
+
+      <span> {{ course().duration }} hours </span>
+    </div>
+  </mat-card-content>
+
+  <mat-card-actions>
+    <button matButton>View Course</button>
+  </mat-card-actions>
+</mat-card>
