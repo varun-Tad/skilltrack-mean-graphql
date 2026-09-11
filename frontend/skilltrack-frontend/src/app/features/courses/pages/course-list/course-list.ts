@@ -1,12 +1,13 @@
-import { Component, signal } from '@angular/core';
-import { Course } from '../../models/course.model';
+import { Component, computed, signal } from '@angular/core';
+
 import { CourseCard } from '../../components/course-card/course-card';
+import { Course, CourseLevel } from '../../models/course.model';
+
 import { EmptyState } from '../../../../shared/components/empty-state/empty-state';
-import { PageHeader } from '../../components/page-header/page-header';
 
 @Component({
   selector: 'app-course-list',
-  imports: [CourseCard, EmptyState, PageHeader],
+  imports: [CourseCard, EmptyState],
   templateUrl: './course-list.html',
   styleUrl: './course-list.scss',
 })
@@ -20,7 +21,6 @@ export class CourseList {
       level: 'Intermediate',
       duration: 14,
     },
-
     {
       id: 'node',
       title: 'Node.js Backend Engineering',
@@ -29,7 +29,6 @@ export class CourseList {
       level: 'Intermediate',
       duration: 12,
     },
-
     {
       id: 'system-design',
       title: 'Frontend System Design',
@@ -40,4 +39,51 @@ export class CourseList {
       duration: 10,
     },
   ]);
+
+  searchQuery = signal('');
+
+  selectedLevel = signal<CourseLevel | 'All'>('All');
+
+  filteredCourses = computed(() => {
+    const query = this.searchQuery().toLowerCase().trim();
+
+    const level = this.selectedLevel();
+
+    return this.courses().filter((course) => {
+      const matchesSearch =
+        course.title.toLowerCase().includes(query) ||
+        course.instructor.toLowerCase().includes(query);
+
+      const matchesLevel = level === 'All' || course.level === level;
+
+      return matchesSearch && matchesLevel;
+    });
+  });
+
+  courseCount = computed(() => this.filteredCourses().length);
+
+  hasActiveFilters = computed(() => {
+    return this.searchQuery().trim() !== '' || this.selectedLevel() !== 'All';
+  });
+
+  onSearch(event: Event): void {
+    const input = event.target as HTMLInputElement;
+
+    this.searchQuery.set(input.value);
+  }
+
+  onLevelChange(event: Event): void {
+    const select = event.target as HTMLSelectElement;
+
+    this.selectedLevel.set(select.value as CourseLevel | 'All');
+  }
+
+  clearFilters(): void {
+    this.searchQuery.set('');
+    this.selectedLevel.set('All');
+  }
+
+  onCourseSelected(course: Course): void {
+    console.log('Selected course:', course);
+  }
 }

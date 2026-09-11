@@ -1,18 +1,41 @@
 <section class="courses-page">
-  <app-page-header
-    title="Explore Courses"
-    description="Build practical skills through structured learning paths."
-  />
+  <div class="courses-header">
+    <h1>Explore Courses</h1>
 
-  @if (courses().length === 0) {
-    <app-empty-state
-      title="No courses available"
-      message="New courses will appear here when they are published."
+    <p>Build practical skills through structured learning paths.</p>
+  </div>
+
+  <div class="course-filters">
+    <input
+      type="search"
+      placeholder="Search by course or instructor..."
+      [value]="searchQuery()"
+      (input)="onSearch($event)"
     />
+
+    <select [value]="selectedLevel()" (change)="onLevelChange($event)">
+      <option value="All">All Levels</option>
+
+      <option value="Beginner">Beginner</option>
+
+      <option value="Intermediate">Intermediate</option>
+
+      <option value="Advanced">Advanced</option>
+    </select>
+
+    @if (hasActiveFilters()) {
+      <button type="button" (click)="clearFilters()">Clear Filters</button>
+    }
+  </div>
+
+  <p class="result-count">{{ courseCount() }} courses found</p>
+
+  @if (filteredCourses().length === 0) {
+    <app-empty-state title="No courses found" message="Try changing your search or filters." />
   } @else {
     <div class="course-grid">
-      @for (course of courses(); track course.id) {
-        <app-course-card [course]="course" />
+      @for (course of filteredCourses(); track course.id) {
+        <app-course-card [course]="course" (courseSelected)="onCourseSelected($event)" />
       }
     </div>
   }
