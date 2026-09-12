@@ -1,5 +1,52 @@
-<section>
-  <h1>Welcome Back</h1>
+<section class="login-page">
+  <form class="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <h1>Login</h1>
 
-  <p>Sign in to continue learning.</p>
+    <div class="form-field">
+      <label for="email"> Email </label>
+
+      <input id="email" type="email" formControlName="email" placeholder="you@example.com" />
+
+      @if (loginForm.controls.email.invalid && loginForm.controls.email.touched) {
+        <div class="error-message">
+          @if (loginForm.controls.email.hasError('required')) {
+            <p>Email is required.</p>
+          }
+
+          @if (loginForm.controls.email.hasError('email')) {
+            <p>Enter a valid email address.</p>
+          }
+        </div>
+      }
+    </div>
+
+    <div class="form-field">
+      <label for="password"> Password </label>
+
+      <input
+        id="password"
+        type="password"
+        formControlName="password"
+        placeholder="Enter your password"
+      />
+
+      @if (loginForm.controls.password.invalid && loginForm.controls.password.touched) {
+        <div class="error-message">
+          @if (loginForm.controls.password.hasError('required')) {
+            <p>Password is required.</p>
+          }
+
+          @if (loginForm.controls.password.hasError('minlength')) {
+            <p>Password must be at least 8 characters.</p>
+          }
+
+          @if (loginForm.controls.password.hasError('containsNumber')) {
+            <p>Password must contain at least one number.</p>
+          }
+        </div>
+      }
+    </div>
+
+    <button type="submit" [disabled]="loginForm.invalid">Login</button>
+  </form>
 </section>
