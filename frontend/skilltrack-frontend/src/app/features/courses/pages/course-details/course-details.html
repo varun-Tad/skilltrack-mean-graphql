@@ -1,0 +1,37 @@
+@if (course) {
+  <section class="course-details">
+    <p class="course-level">
+      {{ course.level }}
+    </p>
+
+    <h1>
+      {{ course.title }}
+    </h1>
+
+    <p class="course-description">
+      {{ course.description }}
+    </p>
+
+    <div class="course-meta">
+      <p>
+        Instructor:
+        {{ course.instructor }}
+      </p>
+
+      <p>
+        Duration:
+        {{ course.duration }} hours
+      </p>
+    </div>
+
+    <button type="button" (click)="startLearning()">Start Learning</button>
+  </section>
+} @else {
+  <section class="course-not-found">
+    <h1>Course not found</h1>
+
+    <p>The course you're looking for doesn't exist.</p>
+
+    <a routerLink="/courses"> ← Back to Courses </a>
+  </section>
+}

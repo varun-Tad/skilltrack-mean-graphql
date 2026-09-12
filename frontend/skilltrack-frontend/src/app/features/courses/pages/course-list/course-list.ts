@@ -1,8 +1,8 @@
-import { Component, computed, signal } from '@angular/core';
-
+import { Component, computed, signal, inject } from '@angular/core';
+import { CourseService } from '../../services/course';
 import { CourseCard } from '../../components/course-card/course-card';
 import { Course, CourseLevel } from '../../models/course.model';
-
+import { Router } from '@angular/router';
 import { EmptyState } from '../../../../shared/components/empty-state/empty-state';
 
 @Component({
@@ -12,37 +12,12 @@ import { EmptyState } from '../../../../shared/components/empty-state/empty-stat
   styleUrl: './course-list.scss',
 })
 export class CourseList {
-  courses = signal<Course[]>([
-    {
-      id: 'angular',
-      title: 'Modern Angular',
-      description: 'Learn standalone components, Signals, RxJS and scalable Angular architecture.',
-      instructor: 'Sarah Chen',
-      level: 'Intermediate',
-      duration: 14,
-    },
-    {
-      id: 'node',
-      title: 'Node.js Backend Engineering',
-      description: 'Build scalable backend APIs using Node.js, Express and modern server patterns.',
-      instructor: 'Michael Lee',
-      level: 'Intermediate',
-      duration: 12,
-    },
-    {
-      id: 'system-design',
-      title: 'Frontend System Design',
-      description:
-        'Learn performance, caching, rendering strategies and scalable frontend architecture.',
-      instructor: 'Emily Davis',
-      level: 'Advanced',
-      duration: 10,
-    },
-  ]);
-
   searchQuery = signal('');
+  private readonly courseService = inject(CourseService); // Angular, give this component the CourseService available in the current injection context.
+  private readonly router = inject(Router);
 
   selectedLevel = signal<CourseLevel | 'All'>('All');
+  courses = this.courseService.getCourses();
 
   filteredCourses = computed(() => {
     const query = this.searchQuery().toLowerCase().trim();
@@ -84,6 +59,6 @@ export class CourseList {
   }
 
   onCourseSelected(course: Course): void {
-    console.log('Selected course:', course);
+    this.router.navigate(['/courses', course.id]);
   }
 }

@@ -1,0 +1,31 @@
+.course-details {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+}
+
+.course-level {
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.course-details h1 {
+  margin: 0.5rem 0 1rem;
+  font-size: 2.5rem;
+}
+
+.course-description {
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.course-meta {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.course-not-found {
+  padding: 3rem 1.5rem;
+  text-align: center;
+}
